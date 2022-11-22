@@ -1,0 +1,23 @@
+==-== Informações gerais ==-==
+Foram vendidos 154 litros de gasolina;
+Foram vendidos até agora R$ 132 de combustível;
+Foram atendidos 3 Carros;
+Restam 134 litros de combustível.
+
+==-= Veículos Atendidos ==-==
+
+Informações do Veículo 1
+Proprietário: 11
+Modelo: 11
+Ano de Produção: 11
+Placa: 11
+Informações do Veículo 2
+Proprietário: 22
+Modelo: 22
+Ano de Produção: 22
+Placa: 22
+Informações do Veículo 3
+Proprietário: 33
+Modelo: 33
+Ano de Produção: 33
+Placa: 33
