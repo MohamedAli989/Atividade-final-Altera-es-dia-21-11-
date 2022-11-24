@@ -1,3 +1,6 @@
+#import <stdio.h>
+#import <stdlib.h>
+
 #define RED "\e[0;31m"
 #define GRN "\e[0;32m"
 #define WHT "\e[0;37m"
@@ -22,12 +25,12 @@ struct TCarro {
   char NomeProprietario[30];
   char Placa[30];
 };
-///Menus
+/// Menus
 float inicio(float Precogasolina);
 int menu(int op);
 int menurelatorio(int op);
 int menuabastecer(int op);
-///Funções
+/// Funções
 void imprimeUmCarro(struct TCarro c);
 void addCarro(int Ctotal, int *fila);
 struct TCarro criaCarro();
@@ -37,16 +40,23 @@ void flush_in();
 void copiarPrincipalParaAtendidos(struct TCarro principal,
                                   struct TCarro atendidos);
 void reorganizarVetor(struct TCarro vetor[], int tamanho);
-void AbastecerAlem(float *Somavendida, float *Somagasolina, float *Tgasolina, float *Precogasolina, float *SomaTotal, int *CAbastecido, int *CFila);
-void Abastecer(float *Somavendida, float *Somagasolina, float *Tgasolina,
+void AbastecerAlem(float *Somavendida, float *Somagasolina, float *Tgasolina,
                    float *Precogasolina, float *SomaTotal, int *CAbastecido,
-                   int *CFila, int gasto);
+                   int *CFila);
+void Abastecer(float *Somavendida, float *Somagasolina, float *Tgasolina,
+               float *Precogasolina, float *SomaTotal, int *CAbastecido,
+               int *CFila, int gasto);
 
-
-///Apresentação de Tabelas
+/// Apresentação de Tabelas
 void FilaEspera(int *CFila, struct TCarro vetorCarro[]);
 void FilaAtendido(int *CAbastecido, struct TCarro VetorAbastecido[]);
 void Tabela(float preco, float *gasolina, int *CFila);
 void TabelaGasoDisp(float *gasolina);
-void TabelaComCarro(float *Somavendida, float *SomaTotal, int *CAbastecido, float *Tgasolina);
+void TabelaComCarro(float *Somavendida, float *SomaTotal, int *CAbastecido,
+                    float *Tgasolina);
 void TabelaGasoResto(float Tgasolina);
+
+void ArquivoCarros(struct TCarro vetor[], int CAbastecido, FILE *A);
+
+void ArquivoDados(float *Somavendida, float *SomaTotal, int *CAbastecido,
+                  float *Tgasolina, FILE *A);

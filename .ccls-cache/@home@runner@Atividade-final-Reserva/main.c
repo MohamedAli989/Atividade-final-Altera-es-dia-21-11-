@@ -2,9 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-void ArquivoCarros(struct TCarro vetor[], int CAbastecido, FILE *A);
-void ArquivoDados(float *Somavendida, float *SomaTotal, int *CAbastecido,
-                  float *Tgasolina, FILE *A);
 
 int MenuR;
 int main(void) {
@@ -26,15 +23,22 @@ int main(void) {
 
   int opMenu = 0;
   while (opMenu != 5) {
+    system("clear");
     Tabela(Precogasolina, &Tgasolina, &CFila);
     opMenu = menu(opcao);
     system("clear");
     switch (opMenu) {
     case 1:
       system("clear");
-      if (CFila < tamFila) {
+      if (Tgasolina == 0) {
+        printf(RED "'Tamo sem gasolina, patrão, procure outro posto de "
+                   "gasolina! Volte em outro momento!\n\n" WHT);
+        
+      } else if (CFila < tamFila) {
         VetorCarro[CFila] = criaCarro();
         CFila++;
+
+        system("clear");
         printf(GRN "\n+1 Veículo adicionado à fila!\n" WHT);
         printf(GRN "\nPressione a tecla Enter para continuar.\n" WHT);
 
@@ -48,6 +52,7 @@ int main(void) {
           TabelaGasoDisp(&Tgasolina);
           printf(YEL "\nDiga quantos litros quer abastecer?:\n" WHT "Digite: ");
           scanf("%f", &gasto);
+          system("clear");
           if (gasto > Tgasolina) {
             TabelaGasoDisp(&Tgasolina);
             OpAB = menuabastecer(opcao);
@@ -65,21 +70,23 @@ int main(void) {
             case 2:
               AbastecerAlem(&Somavendida, &Somagasolina, &Tgasolina,
                             &Precogasolina, &SomaTotal, &CAbastecido, &CFila);
-
               copiarPrincipalParaAtendidos(VetorAbastecido[CFila],
                                            VetorCarro[0]);
               VetorAbastecido = realloc(
-                  VetorAbastecido, CAbastecido + 1 * sizeof(struct TCarro));
+                  VetorAbastecido, (CAbastecido + 1) * sizeof(struct TCarro));
+              VetorAbastecido[CAbastecido] = VetorCarro[0];
 
               reorganizarVetor(VetorCarro, CFila);
               system("clear");
               printf(GRN "\nVeículo Abastecido!\n" WHT);
+              printf(RED "\nDesta maneira, todos os outros veículos na fila "
+                         "foram removidos\n\n" WHT);
               break;
             case 3:
               printf(
                   RED
                   "\nVocê foi removido da fila, desculpe pelo imprevisto" WHT);
-              CFila = CFila - 1;
+              CFila--;
               copiarPrincipalParaAtendidos(VetorAbastecido[CFila],
                                            VetorCarro[0]);
               reorganizarVetor(VetorCarro, CFila);
@@ -99,7 +106,8 @@ int main(void) {
 
         } else {
           printf(RED "'Tamo sem gasolina, patrão, procure outro posto de "
-                     "gasolina!\n E vo" WHT);
+                     "gasolina! Volte em outro momento!\n" WHT);
+          CFila = 0;
         }
       } else {
         printf(RED "\nNão há Veículos para abastecer!\n" WHT);
@@ -107,23 +115,28 @@ int main(void) {
       break;
     case 3:
       flush_in();
+      system("clear");
       FilaEspera(&CFila, VetorCarro);
+      
       break;
     case 4:
       MenuR = 0;
       // submenu---------------------------------------------------------------------
       while (MenuR != 6) {
+   
         MenuR = menurelatorio(opcao);
         switch (MenuR) {
         case 1:
           system("clear");
           printf(CYN "\nForam vendidos %.f litros de gasolina\n" WHT,
                  Somavendida);
+          printf(GRN "\nPressione a tecla Enter para continuar.\n" WHT);
           break;
         case 2:
           system("clear");
           printf(CYN "\nForam vendidos até agora R$ %.f de combustível\n" WHT,
                  SomaTotal);
+          printf(GRN "\nPressione a tecla Enter para continuar.\n" WHT);
           break;
         case 3:
           system("clear");
@@ -140,8 +153,11 @@ int main(void) {
           Arquivo = fopen("Dados.txt", "w");
           ArquivoDados(&Somavendida, &SomaTotal, &CAbastecido, &Tgasolina,
                        Arquivo);
+          if(CAbastecido!=0){
           ArquivoCarros(VetorAbastecido, CAbastecido, Arquivo);
+            }
           fclose(Arquivo);
+          printf(GRN "\nPressione a tecla Enter para continuar.\n" WHT);
           break;
         case 6:
           printf(GRN "Voltando ao menu principal...\n" WHT);
@@ -162,38 +178,4 @@ int main(void) {
     getchar();
   }
   return 0;
-}
-//  Impressão do Dados.txt (não consegui colocar no header/impl)
-void ArquivoDados(float *Somavendida, float *SomaTotal, int *CAbastecido,
-                  float *Tgasolina, FILE *A) {
-  if (*CAbastecido == 1) {
-    fprintf(A,
-            "==-== Informações gerais ==-==\nForam vendidos %.f litros de "
-            "gasolina;\nForam vendidos até "
-            "agora R$ %.f de combustível;\nFoi atendido %d Carro;\nRestam %.f "
-            "litros de combustível.\n",
-            *Somavendida, *SomaTotal, *CAbastecido, *Tgasolina);
-  } else if (*CAbastecido > 1) {
-    fprintf(A,
-            "==-== Informações gerais ==-==\nForam vendidos %.f litros de "
-            "gasolina;\nForam vendidos até "
-            "agora R$ %.f de combustível;\nForam atendidos %d Carros;\nRestam "
-            "%.f litros de combustível.\n",
-            *Somavendida, *SomaTotal, *CAbastecido, *Tgasolina);
-  } else {
-    fprintf(A, "==-== Informações gerais ==-==\n"
-               "Não foi vendido nenhum combustível;\nNão houve nenhum "
-               "Lucro;\nNenhum Carro foi atendido;\n"
-               "O Tanque de combustível está cheio.\n");
-  }
-}
-void ArquivoCarros(struct TCarro vetor[], int CAbastecido, FILE *A) {
-  fprintf(A,"\n==-= Veículos Atendidos ==-==\n");
-  for (int cont = 0; cont < CAbastecido; cont++) {
-    fprintf(A, "\nInformações do Veículo %d", cont + 1);
-    fprintf(A, "\nProprietário: %s", vetor[cont + 1].NomeProprietario);
-    fprintf(A, "\nModelo: %s", vetor[cont + 1].ModeloDoCarro);
-    fprintf(A, "\nAno de Produção: %d", vetor[cont + 1].AnoDoCarro);
-    fprintf(A, "\nPlaca: %s", vetor[cont + 1].Placa);
-  }
 }
