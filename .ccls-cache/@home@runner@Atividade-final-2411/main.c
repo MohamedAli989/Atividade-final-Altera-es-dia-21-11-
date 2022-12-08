@@ -17,7 +17,7 @@ int main(void) {
   printf("\nQual será o tamanho da fila?:\n");
   scanf("%d", &tamFila);
   VetorCarro = (struct TCarro *)calloc(tamFila, sizeof(struct TCarro));
-  VetorAbastecido = (struct TCarro *)calloc(0, sizeof(struct TCarro));
+  VetorAbastecido = (struct TCarro *)calloc(1, sizeof(struct TCarro));
   system("clear");
 
   // menu--------------------------------------------
@@ -28,7 +28,7 @@ int main(void) {
    if(CFila==0){
      printf(MAG"\nAtualmente atendendo nenhum veículo.\n");
    } else if (CFila >=1){
-     printf(MAG"\nAtualmente atendendo o veículo:"BLU" %d\n"MAG"Proprietário: "BLU"%s\n\n", CarroTotal+1, VetorCarro[0].NomeProprietario);
+     printf(MAG"\nAtualmente atendendo o veículo:"BLU" %d\n"MAG"Proprietário: "BLU"%s\n\n", CarroTotal, VetorCarro[0].NomeProprietario);
    }
     opMenu = menu(opcao);
     system("clear");
@@ -78,7 +78,7 @@ CarroTotal++;
               break;
             case 2:
               AbastecerAlem(&Somavendida, &Somagasolina, &Tgasolina,
-                            Precogasolina, &SomaTotal, &CAbastecido, &CFila);
+                            Precogasolina, &SomaTotal, &CAbastecido, &CFila, gasto);
               copiarPrincipalParaAtendidos(VetorAbastecido[CFila],
                                            VetorCarro[0]);
               VetorAbastecido = realloc(
@@ -148,7 +148,7 @@ CarroTotal++;
           break;
           case 2:
           system("clear");
-          printf(CYN "Foram vendidos até agora" GRN "R$ %.f" CYN
+          printf(CYN "Foram vendidos até agora " GRN "R$ %.f" CYN
                      " de combustível\n\n" WHT,
                  SomaTotal);
           break;

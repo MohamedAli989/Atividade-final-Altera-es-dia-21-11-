@@ -80,7 +80,7 @@ void imprimeUmCarro(struct TCarro c) {
 struct TCarro criaCarro(int Carrototal) {
   struct TCarro auxiliar;
   printf(MAG "==-== " BLU "Informações do veículo %d " MAG "==-==",
-         Carrototal + 1);
+         Carrototal+1);
   fgets(auxiliar.NomeProprietario, 30, stdin);
   auxiliar.NomeProprietario[strcspn(auxiliar.NomeProprietario, "\n")] = 0;
   printf(BLU "\nDigite o nome do proprietário:" WHT " ");
@@ -121,10 +121,10 @@ void reorganizarVetor(struct TCarro vetor[], int tamanho) {
 
 void AbastecerAlem(float *Somavendida, float *Somagasolina, float *Tgasolina,
                    float Precogasolina, float *SomaTotal, int *CAbastecido,
-                   int *CFila) {
+                   int *CFila, int gasto) {
   *Somavendida += *Tgasolina;
-  *Somagasolina = *Tgasolina * Precogasolina;
-  *SomaTotal += *Tgasolina;
+  *Somagasolina += *Tgasolina;
+  *SomaTotal = *SomaTotal + (Precogasolina * *Tgasolina);
   *Tgasolina = 0;
   *CAbastecido = *CAbastecido + 1;
   *CFila = 0;
@@ -133,9 +133,9 @@ void Abastecer(float *Somavendida, float *Somagasolina, float *Tgasolina,
                float Precogasolina, float *SomaTotal, int *CAbastecido,
                int *CFila, int gasto) {
   *Somavendida += *Somavendida + gasto;
-  *Somagasolina = gasto * Precogasolina;
-  *SomaTotal = *SomaTotal + *Somagasolina;
-  *Tgasolina = *Tgasolina - gasto;
+  *Somagasolina += *Tgasolina;
+  *SomaTotal = *SomaTotal + (Precogasolina * gasto);
+  *Tgasolina -= gasto;
   *CAbastecido = *CAbastecido + 1;
   *CFila = *CFila - 1;
 }
