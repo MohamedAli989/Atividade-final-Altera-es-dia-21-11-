@@ -120,20 +120,20 @@ void reorganizarVetor(struct TCarro vetor[], int tamanho) {
 }
 
 void AbastecerAlem(float *Somavendida, float *Somagasolina, float *Tgasolina,
-                   float *Precogasolina, float *SomaTotal, int *CAbastecido,
+                   float Precogasolina, float *SomaTotal, int *CAbastecido,
                    int *CFila) {
   *Somavendida += *Tgasolina;
-  *Somagasolina = *Tgasolina * *Precogasolina;
-  *SomaTotal += *Tgasolina;
+  *Somagasolina += *Tgasolina;
+  *SomaTotal = Precogasolina * *Tgasolina;
   *Tgasolina = 0;
   *CAbastecido = *CAbastecido + 1;
   *CFila = 0;
 }
 void Abastecer(float *Somavendida, float *Somagasolina, float *Tgasolina,
-               float *Precogasolina, float *SomaTotal, int *CAbastecido,
+               float Precogasolina, float *SomaTotal, int *CAbastecido,
                int *CFila, int gasto) {
   *Somavendida += *Somavendida + gasto;
-  *Somagasolina = gasto * *Precogasolina;
+  *Somagasolina = gasto * Precogasolina;
   *SomaTotal = *SomaTotal + *Somagasolina;
   *Tgasolina = *Tgasolina - gasto;
   *CAbastecido = *CAbastecido + 1;
@@ -228,12 +228,11 @@ void TabelaComCarro(float *Somavendida, float *SomaTotal, int *CAbastecido,
                "litros " CYN " de combustível.\n" WHT,
            *Somavendida, *SomaTotal, *CAbastecido, *Tgasolina);
     if (carroresto == 1) {
+      printf(CYN
+             "\nEstava presente %d veículo na fila antes do tanque zerar" WHT,
+             carroresto);
+    } else if (carroresto >= 2) {
       printf(
-          CYN
-          "\nEstava presente %d veículo na fila antes do tanque zerar" WHT,
-          carroresto);
-    }else if (carroresto >=2){
-            printf(
           CYN
           "\nEstavam presentes %d veículos na fila antes do tanque zerar" WHT,
           carroresto);
@@ -248,13 +247,12 @@ void TabelaComCarro(float *Somavendida, float *SomaTotal, int *CAbastecido,
                "%d Carros;" CYN "\nRestam " BBLU "%.f "
                "litros" CYN " de combustível.\n" WHT,
            *Somavendida, *SomaTotal, *CAbastecido, *Tgasolina);
-     if (carroresto == 1) {
+    if (carroresto == 1) {
+      printf(CYN
+             "\nEstava presente %d veículo na fila antes do tanque zerar" WHT,
+             carroresto);
+    } else if (carroresto >= 2) {
       printf(
-          CYN
-          "\nEstava presente %d veículo na fila antes do tanque zerar" WHT,
-          carroresto);
-    }else if (carroresto >=2){
-            printf(
           CYN
           "\nEstavam presentes %d veículos na fila antes do tanque zerar" WHT,
           carroresto);
@@ -294,18 +292,19 @@ void ArquivoDados(float *Somavendida, float *SomaTotal, int *CAbastecido,
             "agora R$ %.f de combustível;\nForam atendidos %d Carros;\nRestam "
             "%.f litros de combustível.\n",
             *Somavendida, *SomaTotal, *CAbastecido, *Tgasolina);
-     if (carroresto == 1) {
+    if (carroresto == 1) {
+      fprintf(A,
+              CYN
+              "\nEstava presente %d veículo na fila antes do tanque zerar" WHT,
+              carroresto);
+    } else if (carroresto >= 2) {
       fprintf(
-          A,CYN
-          "\nEstava presente %d veículo na fila antes do tanque zerar" WHT,
-          carroresto);
-    }else if (carroresto >=2){
-            fprintf(
-          A,CYN
+          A,
+          CYN
           "\nEstavam presentes %d veículos na fila antes do tanque zerar" WHT,
           carroresto);
     }
-    } else {
+  } else {
     fprintf(A, "==-== Informações gerais ==-==\n"
                "Não foi vendido nenhum combustível;\nNão houve nenhum "
                "Lucro;\nNenhum Carro foi atendido;\n"

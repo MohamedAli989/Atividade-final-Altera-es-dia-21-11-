@@ -1,29 +1,14 @@
 ==-== Informações gerais ==-==
-Foram vendidos 563 litros de gasolina;
-Foram vendidos até agora R$ 400 de combustível;
-Foram atendidos 4 Carros;
+Foram vendidos 200 litros de gasolina;
+Foram vendidos até agora R$ 4400 de combustível;
+Foi atendido 1 Carro;
 Restam 0 litros de combustível.
 
 ==-= Veículos Atendidos ==-==
 
 
 Informações do Veículo 1
-Proprietário: 22
-Modelo: 333
-Ano de Produção: 55
-Placa: 66
-Informações do Veículo 2
-Proprietário: 33
-Modelo: 44
-Ano de Produção: 66
-Placa: avac
-Informações do Veículo 3
-Proprietário: 556
-Modelo: 667
-Ano de Produção: 42
-Placa: 123
-Informações do Veículo 4
-Proprietário: 434
-Modelo: 66
-Ano de Produção: 33
-Placa: 22
+Proprietário: 11
+Modelo: 111
+Ano de Produção: 11
+Placa: 111

@@ -42,10 +42,10 @@ void copiarPrincipalParaAtendidos(struct TCarro principal,
                                   struct TCarro atendidos);
 void reorganizarVetor(struct TCarro vetor[], int tamanho);
 void AbastecerAlem(float *Somavendida, float *Somagasolina, float *Tgasolina,
-                   float *Precogasolina, float *SomaTotal, int *CAbastecido,
+                   float Precogasolina, float *SomaTotal, int *CAbastecido,
                    int *CFila);
 void Abastecer(float *Somavendida, float *Somagasolina, float *Tgasolina,
-               float *Precogasolina, float *SomaTotal, int *CAbastecido,
+               float Precogasolina, float *SomaTotal, int *CAbastecido,
                int *CFila, int gasto);
 void abastecerTanque(float *Tgasolina);
 

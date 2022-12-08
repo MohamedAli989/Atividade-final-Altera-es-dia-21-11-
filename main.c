@@ -1,3 +1,4 @@
+
 #include "header.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,7 +17,7 @@ int main(void) {
   printf("\nQual será o tamanho da fila?:\n");
   scanf("%d", &tamFila);
   VetorCarro = (struct TCarro *)calloc(tamFila, sizeof(struct TCarro));
-  VetorAbastecido = (struct TCarro *)calloc(0, sizeof(struct TCarro));
+  VetorAbastecido = (struct TCarro *)calloc(1, sizeof(struct TCarro));
   system("clear");
 
   // menu--------------------------------------------
@@ -77,7 +78,7 @@ CarroTotal++;
               break;
             case 2:
               AbastecerAlem(&Somavendida, &Somagasolina, &Tgasolina,
-                            &Precogasolina, &SomaTotal, &CAbastecido, &CFila);
+                            Precogasolina, &SomaTotal, &CAbastecido, &CFila);
               copiarPrincipalParaAtendidos(VetorAbastecido[CFila],
                                            VetorCarro[0]);
               VetorAbastecido = realloc(
@@ -103,7 +104,7 @@ CarroTotal++;
               reorganizarVetor(VetorCarro, CFila);
             }
           } else {
-            Abastecer(&Somavendida, &Somagasolina, &Tgasolina, &Precogasolina,
+            Abastecer(&Somavendida, &Somagasolina, &Tgasolina, Precogasolina,
                       &SomaTotal, &CAbastecido, &CFila, gasto);
             copiarPrincipalParaAtendidos(VetorAbastecido[CFila], VetorCarro[0]);
             VetorAbastecido = realloc(
